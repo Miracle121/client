@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoding"></mat-spinner>
+  <form  [formGroup]="form" (submit)="PostData()" *ngIf="!isLoding">
+      <mat-form-field>
+          <input
+          matInput
+          type="text"
+          formControlName="titel"
+
+          placeholder="enter titel"
+          >
+          <mat-error *ngIf="form.get('titel').invalid">Iltimos qatorni toldiring</mat-error>
+         </mat-form-field>
+
+        <div>
+          <button mat-stroked-button type="button" (click)="fileupload.click()">Image Upload</button>
+          <input type="file" #fileupload (change)="onFilePicker($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreView!=='' && imagePreView">
+          <img [src]="imagePreView" [alt]="this.form.value.titel" >
+        </div>
+      <mat-form-field>
+        <textarea
+        matInput
+         formControlName="contet"
+        placeholder="enter contet"
+
+        ></textarea>
+        <mat-error *ngIf="form.get('contet').invalid">iltimos qatorni toldiring</mat-error>
+      </mat-form-field>
+      <br>
+      <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      > OK </button>
+  </form>
+
+</mat-card>
+
