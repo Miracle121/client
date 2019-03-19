@@ -1,6 +1,8 @@
 const express = require("express");
 const Auth = require("../models/Auth");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+//const cheakuser = require("./../middleware/check-auth");
 const router = express.Router();
 
 router.post("",(req,res,next)=>{
@@ -23,19 +25,12 @@ router.post("",(req,res,next)=>{
         res.status(500).json({
           error:err
         });
-
       });
-
     });
-
   });
-
-
-  //res.send();
-
 });
 
-router.get("",(req,res,next)=>{
+router.get("", (req,res,next)=>{
   Auth.find().then((result)=>{
     res.status(200).json({
       message:"get is working",
@@ -91,5 +86,40 @@ router.delete("/:id",(req,res,next)=>{
     });
   });
 });
+
+router.post("/login",(req,res,next)=>{
+   let featchauth ;
+    Auth.findOne({email:req.body.email}).then((reguser)=>{
+
+    if (!reguser){
+        return res.status(401).json({
+        message:"Auth faild1"
+      });
+
+    }
+      featchauth = reguser;
+      return bcrypt.compare(req.body.password,reguser.password);
+  })
+  .then(result=>{
+    console.log(result);
+
+    if(!result){
+        return res.status(401).json({
+        message: "Auth faild2"
+      });
+    }
+    const token = jwt.sign({ email: featchauth.email, userId: featchauth._id},'mir@cle121',{expiresIn:"1h"});
+    //console.log(token);
+    res.status(200).json({
+      token:token
+    });
+
+  }).catch(err=>{
+      return res.status(401).json({
+      message: "Auth faild3"
+    });
+  })
+});
+
 module.exports = router;
 

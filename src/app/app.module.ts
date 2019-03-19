@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent} from './app.component';
 import { UsersComponent} from './users/users.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { AuthInterceptor } from './auth/auth-interceptor';
 import {
   MatInputModule,
   MatCardModule,
@@ -18,6 +19,7 @@ import { HeaderComponent } from './header/header.component';
 import { UserslistComponent } from './users/userslist/userslist.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     MatProgressSpinnerModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

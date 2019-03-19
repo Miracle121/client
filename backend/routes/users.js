@@ -1,6 +1,7 @@
 const express = require("express");
 
 const User = require('../models/Users');
+const checkAuth = require("./../middleware/check-auth");
 
 const router = express.Router();
 router.post("", (req, res, next) => {
@@ -27,7 +28,7 @@ router.put("/:id", (req, res, next) => {
   });
 });
 
-router.get("", (req, res, next) => {
+router.get("",  (req, res, next) => {
   User.find().then((result) => {
     res.status(200).json({
       message: "data sended success fully",
