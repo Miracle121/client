@@ -17,7 +17,7 @@ router.post("", (req, res, next) => {
     });
   });
 });
-router.put("/:id", (req, res, next) => {
+router.put("/:id",  (req, res, next) => {
   const userupdate = new User({
     _id: req.body.id,
     titel: req.body.titel,
@@ -36,7 +36,7 @@ router.get("",  (req, res, next) => {
     });
   });
 });
-router.get("/:id", (req, res, next) => {
+router.get("/:id",  (req, res, next) => {
   User.findById(req.params.id).then(user => {
      if (user) {
       res.status(200).json(

@@ -9,15 +9,16 @@ import{Auth} from './auth.modul';
 })
 export class AutService {
   private token: string;
+  private authStatusListener = new Subject<boolean>();
   constructor(private http: HttpClient, private router: Router) {
   }
   getToken(){
-
-    //console.log(this.token);
     return this.token;
   }
 
-
+   getAuthStatusListener(){
+   return this.authStatusListener.asObservable();
+   }
   createauth(firstname: string, secondname: string, username: string, email: string, password: string) {
       const authdata : Auth = { firstname:firstname,secondname:secondname,username:username,email:email, password :password };
      // console.log(authdata);
@@ -27,6 +28,7 @@ export class AutService {
       console.log(result);
     });
   }
+
   loginauth(email: string, password: string){
     const logindata: Auth = { email: email, password: password };
 
@@ -34,6 +36,7 @@ export class AutService {
       .subscribe(respons => {
         const token = respons.token;
         this.token= token;
+        this.authStatusListener.next(true);
 
       });
 

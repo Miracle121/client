@@ -10,7 +10,6 @@ import { AutService } from '../aut.service';
 export class SignupComponent implements OnInit {
 
   constructor(public authservice: AutService) { }
-
   ngOnInit() {
   }
   isLoding = false;
@@ -19,7 +18,12 @@ export class SignupComponent implements OnInit {
     if(form.invalid) {
       return;
     }
-    this.authservice.createauth(form.value.firstname, form.value.secondname, form.value.username, form.value.email, form.value.password);
+    this.authservice.createauth(
+       form.value.firstname,
+       form.value.secondname,
+       form.value.username,
+       form.value.email,
+       form.value.password);
   }
 
 }

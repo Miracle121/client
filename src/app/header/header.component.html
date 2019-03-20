@@ -1,12 +1,14 @@
 <mat-toolbar color="primary">
-<samp><a [routerLink]="['/']" routerLinkActive="router-link-active" >Salom Salom</a></samp>
+<samp *ngIf="userIsAuthenticade"><a [routerLink]="['/']" routerLinkActive="router-link-active" >Salom Salom</a></samp>
 <ul>
-  <li><a [routerLink]="['/usercreate']"  >usercreate</a></li>
+  <li *ngIf="userIsAuthenticade">
+    <a [routerLink]="['/usercreate']"  >usercreate</a>
+  </li>
+  <li *ngIf="!userIsAuthenticade"><a [routerLink]="['/signup']">signup</a></li>
+  <li *ngIf="!userIsAuthenticade"><a [routerLink]="['/login']">login</a></li>
+  <li *ngIf="userIsAuthenticade">
+    <button mat-button>Log Out</button>
+  </li>
 </ul>
-<ul>
-  <li><a [routerLink]="['/signup']">signup</a></li>
-</ul>
-<ul>
-  <li><a [routerLink]="['/login']">login</a></li>
-</ul>
+
 </mat-toolbar>
