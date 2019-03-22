@@ -19,6 +19,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  OnLogout(){
+    this.authservice.logout();
+
+  }
 
   OnDestroy(){
     this.authLisenerSubs.unsubscribe();
