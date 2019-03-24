@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   private authLisenerSubs: Subscription;
   constructor(private authservice: AutService) { }
   ngOnInit() {
+    this.userIsAuthenticade = this.authservice.getIsAuthentificate();
     this.authLisenerSubs = this.authservice
     .getAuthStatusListener()
     .subscribe(isAuthfication=>{
