@@ -8,20 +8,22 @@ import { Router } from '@angular/router';
 export class UsersService {
   constructor(private http: HttpClient, private router : Router){
   }
-  private users:Users[] = [];
+  private users: Users[] = [];
   private userUpdate = new Subject<Users[]>();
   getUsers(){
     this.http.get<{message: string , post: any}>('http://localhost:3000/api/post')
-    .pipe(map((postdata)=>{
-      return postdata.post.map(post=>{
+    .pipe(map((postdata) => {
+      return postdata.post.map(post => {
+        console.log(post);
         return{
-        titel:post.titel,
+        titel: post.titel,
         contet : post.contet,
+        creater: post.creater,
         id : post._id
       };
       });
        }))
-    .subscribe((transfordata)=>{
+    .subscribe((transfordata) => {
       this.users = transfordata;
       this.userUpdate.next([...this.users]);
     });
@@ -30,8 +32,8 @@ export class UsersService {
     return this.userUpdate.asObservable();
   }
   addUsers(titel: string , contet: string){
-    const user: Users =  {id:null, titel: titel, contet: contet};
-    this.http.post<{message: string, postId:string}>("http://localhost:3000/api/post",user).subscribe((resposPost)=>
+    const user: Users =  {id: null, titel : titel, contet : contet};
+    this.http.post<{message: string, postId: string}>( "http://localhost:3000/api/post" , user).subscribe((resposPost)=>
     {
       const id = resposPost.postId;
       user.id = id;

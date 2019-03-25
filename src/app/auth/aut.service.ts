@@ -19,7 +19,6 @@ export class AutService {
   getIsAuthentificate() {
     return this.isAuthentificated;
   }
-
    getAuthStatusListener() {
    return this.authStatusListener.asObservable();
    }
@@ -30,7 +29,6 @@ export class AutService {
       console.log(result);
     });
   }
-
   loginauth(email: string, password: string) {
     const logindata: Auth = { email, password };
     this.http.post<{token: string, expiresIn: number}>('http://localhost:3000/api/auth/login', logindata)
@@ -40,7 +38,6 @@ export class AutService {
         if (token) {
           const ExpiresDuration = respons.expiresIn;
           this.setTimer(ExpiresDuration);
-         // console.log(ExpiresDuration);
           this.isAuthentificated = true;
           this.authStatusListener.next(true);
           const now = new Date();
@@ -75,13 +72,12 @@ logout() {
   clearTimeout(this.tokenTimer);
 }
 
-private setTimer(durition:number){
+private setTimer(durition: number){
   console.log("set timer "+ durition);
   this.tokenTimer = setTimeout(() => {
     this.logout();
   }, durition * 1000);
 }
-
 private saveAuthData(token: string , expirationDate: Date) {
 localStorage.setItem('token', token);
 localStorage.setItem('expiration', expirationDate.toISOString());

@@ -19,8 +19,8 @@ export class UserslistComponent implements OnInit, OnDestroy {
    this.Subscrpt = this.userService.getUpdateUserslisner().subscribe((user: Users[]) => {
       this.posts = user;
     });
-    this.userIsAuthenticade = this.authservice.getIsAuthentificate();
-    this.authLisenerSubs= this.authservice.getAuthStatusListener().subscribe(isAuthenticated=>{
+   this.userIsAuthenticade = this.authservice.getIsAuthentificate();
+   this.authLisenerSubs= this.authservice.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticade =isAuthenticated;
       });
     }

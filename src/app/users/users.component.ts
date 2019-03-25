@@ -21,18 +21,16 @@ export class UsersComponent implements OnInit {
     isLoding = false;
       imagePreView:any;
   ngOnInit() {
-
     this.form = new FormGroup({
-      'titel': new FormControl(null,{
-        validators:[Validators.required,Validators.minLength(3)]}),
-      'contet': new FormControl(null,{
+      titel: new FormControl(null,{
+        validators:[Validators.required, Validators.minLength(3)]}),
+      contet: new FormControl(null, {
           validators:[Validators.required,Validators.minLength(5)]
         }),
-      'image': new FormControl(null,{validators:[Validators.required]})
+     // image: new FormControl(null, {validators: [Validators.required]})
     });
-
-    this.router.paramMap.subscribe((paramMap: ParamMap)=>{
-      if(paramMap.has('userId')){
+    this.router.paramMap.subscribe((paramMap: ParamMap) => {
+      if(paramMap.has('userId')) {
         this.mode = 'edit';
         this.userId = paramMap.get('userId');
         this.isLoding = true;
@@ -40,14 +38,13 @@ export class UsersComponent implements OnInit {
             .subscribe(userdata => {
               this.user = {id: userdata._id , titel: userdata.titel,  contet: userdata.contet };
               this.form.setValue({
-                titel:this.user.titel,
-                contet:this.user.contet
+                titel: this.user.titel,
+                contet: this.user.contet
               });
         });
         this.isLoding = false;
-     }
-       else{
-         this.mode='create';
+     } else {
+         this.mode = 'create';
       }
     });
   }

@@ -11,14 +11,15 @@
           >
           <mat-error *ngIf="form.get('titel').invalid">Iltimos qatorni toldiring</mat-error>
          </mat-form-field>
+         <br>
 
-        <div>
+      <!--   <div>
           <button mat-stroked-button type="button" (click)="fileupload.click()">Image Upload</button>
           <input type="file" #fileupload (change)="onFilePicker($event)">
-        </div>
-        <div class="image-preview" *ngIf="imagePreView!=='' && imagePreView">
-          <img [src]="imagePreView" [alt]="this.form.value.titel" >
-        </div>
+        </div> -->
+        <!-- <div class="image-preview" *ngIf="imagePreView!=='' && imagePreView">
+          <img [src]="imagePreView" [alt]="this.form.value.titel" > </div> -->
+
       <mat-form-field>
         <textarea
         matInput

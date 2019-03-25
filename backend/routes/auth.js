@@ -30,7 +30,7 @@ router.post("",(req,res,next)=>{
   });
 });
 
-router.get("", (req,res,next)=>{
+router.get("",  (req,res,next)=>{
   Auth.find().then((result)=>{
     res.status(200).json({
       message:"get is working",
@@ -108,7 +108,7 @@ router.post("/login",(req,res,next)=>{
     const token = jwt.sign(
       { email: featchauth.email,
         userId: featchauth._id},
-        'mir@cle121',
+        "miracle121",
         {expiresIn:"1h"});
     res.status(200).json({
       token:token,
@@ -117,7 +117,7 @@ router.post("/login",(req,res,next)=>{
 
   }).catch(err=>{
       return res.status(401).json({
-      message: "Auth faild3"
+      message:err + "Auth faild3"
     });
   })
 });
