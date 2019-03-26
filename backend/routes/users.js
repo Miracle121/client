@@ -16,18 +16,24 @@ router.post("", checkAuth, (req, res, next) => {
     });
   });
 });
-router.put("/:id",  (req, res, next) => {
+router.put("/:id", checkAuth,  (req, res, next) => {
   const userupdate = new User({
     _id: req.body.id,
     titel: req.body.titel,
     contet: req.body.contet,
     creater: req.userData.userId
   });
-  User.updateOne({ _id: req.params.id }, userupdate).then(result => {
-    res.status(200).json({ message: "Update successful" });
+  User.updateOne({ _id: req.params.id, creater: req.userData.userId}, userupdate).then(result => {
+    if (result.nModified>0)
+    {
+      res.status(200).json({ message: "Update successful" });
+    }else{
+      res.status(401).json({
+        message:"Unsuccessful Updated"
+      });
+    }
   });
 });
-
 router.get("", (req, res, next) => {
   User.find().then((result) => {
     res.status(200).json({
@@ -36,7 +42,7 @@ router.get("", (req, res, next) => {
     });
   });
 });
-router.get("/:id", checkAuth, (req, res, next) => {
+router.get("/:id",(req, res, next) => {
   User.findById(req.params.id).then(user => {
      if (user) {
       res.status(200).json(
@@ -49,10 +55,17 @@ router.get("/:id", checkAuth, (req, res, next) => {
   });
 });
 
-router.delete("/:id",  (req, res, next) => {
-  User.deleteOne({ _id: req.params.id }).then((result) => {
-    console.log("Deleted");
-    res.status(200).json({ message: "Deleted" });
+router.delete("/:id", checkAuth, (req, res, next) => {
+  User.deleteOne({ _id: req.params.id, creater: req.userData.userId }).then((result) => {
+    if (result.n > 0) {
+      console.log(result);
+      res.status(200).json({ message: "Deleted" });
+    } else {
+      res.status(401).json({
+        message: "Undeleted Updated"
+      });
+    }
+
   })
 });
 module.exports =router;

@@ -11,11 +11,14 @@ import { AutService } from '../../auth/aut.service';
 export class UserslistComponent implements OnInit, OnDestroy {
   userIsAuthenticade = false;
   posts: Users[] = [];
+  userId:string;
   private Subscrpt: Subscription;
   private authLisenerSubs: Subscription;
+
   constructor(public userService: UsersService, private authservice: AutService) {   }
   ngOnInit() {
    this.userService.getUsers();
+   this.userId = this.authservice.getUserId();
    this.Subscrpt = this.userService.getUpdateUserslisner().subscribe((user: Users[]) => {
       this.posts = user;
     });
