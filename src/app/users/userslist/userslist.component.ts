@@ -23,8 +23,11 @@ export class UserslistComponent implements OnInit, OnDestroy {
       this.posts = user;
     });
    this.userIsAuthenticade = this.authservice.getIsAuthentificate();
-   this.authLisenerSubs= this.authservice.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticade =isAuthenticated;
+   this.authLisenerSubs= this.authservice
+   .getAuthStatusListener()
+   .subscribe(isAuthenticated => {
+     this.userId = this.authservice.getUserId();
+     this.userIsAuthenticade =isAuthenticated;
       });
     }
     onDelete(postId: string){

@@ -14,7 +14,7 @@ export class UsersService {
     this.http.get<{message: string , post: any}>('http://localhost:3000/api/post')
     .pipe(map((postdata) => {
       return postdata.post.map(post => {
-        console.log(post);
+        //console.log(post);
         return{
         titel: post.titel,
         contet : post.contet,
