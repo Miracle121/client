@@ -1,4 +1,4 @@
-import {Users} from './users.modul';
+import {Users} from './users.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -56,7 +56,6 @@ export class UsersService {
      this.http.put("http://localhost:3000/api/post/"+id,userinfo)
      .subscribe((reson)=>{
        const updateus = [...this.users];
-       console.log(updateus);
        const oldupdate = updateus.findIndex(p=>p.id===userinfo.id);
        updateus[oldupdate] = userinfo;
        console.log(oldupdate);

@@ -21,8 +21,10 @@ exports.updateUsers = (req, res, next) => {
     contet: req.body.contet,
     creater: req.userData.userId
   });
+  //console.log(userupdate);
   User.updateOne({ _id: req.params.id, creater: req.userData.userId }, userupdate).then(result => {
-    if (result.nModified > 0) {
+   // console.log(result);
+    if (result.n > 0) {
       res.status(200).json({ message: "Update successful" });
     } else {
       res.status(401).json({
