@@ -4,8 +4,8 @@
   <li *ngIf="userIsAuthenticade">
     <a [routerLink]="['/usercreate']"  >usercreate</a>
   </li>
-  <li *ngIf="!userIsAuthenticade"><a [routerLink]="['/signup']">signup</a></li>
-  <li *ngIf="!userIsAuthenticade"><a [routerLink]="['/login']">login</a></li>
+  <li *ngIf="!userIsAuthenticade"><a [routerLink]="['signup']">signup</a></li>
+  <li *ngIf="!userIsAuthenticade"><a [routerLink]="['login']">login</a></li>
   <li *ngIf="userIsAuthenticade">
     <button mat-button (click)="OnLogout()">Log Out</button>
   </li>

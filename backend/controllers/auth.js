@@ -104,7 +104,7 @@ exports.authLoginUser = (req, res, next) => {
           email: featchauth.email,
           userId: featchauth._id
         },
-        "miracle121",
+        process.env.JWT_KEY,
         { expiresIn: "1h" });
       res.status(200).json({
         token: token,

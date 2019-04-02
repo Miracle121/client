@@ -3,7 +3,7 @@ module.exports = (req,res,next)=>{
   try {
     const token = req.headers.authorization.split(" ")[1];
 
-    var decodtoken = jwt.verify(token, ('miracle121').toString());
+    var decodtoken = jwt.verify(token, (process.env.JWT_KEY).toString());
     //console.log(decodtoken);
     //const decodtoken =
     //jwt.verify(token,"miracle121");

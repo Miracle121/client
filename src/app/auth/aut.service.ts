@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Auth } from './auth.modul';
+import { Auth } from './auth.modole';
+import { environment } from "../../environments/environment";
+const URL_API = environment.API_URL +"auth";
 @Injectable({
   providedIn: 'root'
 })
@@ -23,20 +25,19 @@ export class AutService {
    getAuthStatusListener() {
    return this.authStatusListener.asObservable();
    }
-
-   getUserId(){
+  getUserId(){
      return this.userId;
    }
   createauth(firstname: string, secondname: string, username: string, email: string, password: string) {
       const authdata: Auth = { firstname, secondname, username, email, password };
-      this.http.post('http://localhost:3000/api/auth', authdata)
+    this.http.post( URL_API, authdata)
     .subscribe(result => {
       console.log(result);
     });
   }
   loginauth(email: string, password: string) {
     const logindata: Auth = { email, password };
-    this.http.post<{ token: string, expiresIn: number, userId: string}>('http://localhost:3000/api/auth/login', logindata)
+    this.http.post<{ token: string, expiresIn: number, userId: string }>(URL_API+"/login", logindata)
       .subscribe(respons => {
         const token = respons.token;
         this.token = token;
@@ -69,7 +70,6 @@ autoAuth() {
    this.authStatusListener.next(true);
  }
 }
-
 logout() {
   this.token = null;
   this.isAuthentificated = false;
@@ -79,7 +79,6 @@ logout() {
   this.router.navigate(['/login']);
   clearTimeout(this.tokenTimer);
 }
-
 private setTimer(durition: number){
   console.log("set timer "+ durition);
   this.tokenTimer = setTimeout(() => {
@@ -87,9 +86,9 @@ private setTimer(durition: number){
   }, durition * 1000);
 }
 private saveAuthData(token: string , expirationDate: Date, userId: string) {
-localStorage.setItem('token', token);
-localStorage.setItem('expiration', expirationDate.toISOString());
-localStorage.setItem('userId',  userId);
+  localStorage.setItem('token', token);
+  localStorage.setItem('expiration', expirationDate.toISOString());
+  localStorage.setItem('userId',  userId);
 }
 private cleareAuthData() {
   localStorage.removeItem('token');
@@ -105,9 +104,8 @@ private getAuthData() {
   }
   return {
     token : token,
-    expiration: new Date(expirationDate),
-    userId:userId
+    expiration : new Date(expirationDate),
+    userId : userId
   };
-
 }
 }
